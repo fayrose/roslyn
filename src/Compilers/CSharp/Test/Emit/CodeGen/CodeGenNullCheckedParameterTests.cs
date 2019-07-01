@@ -1893,5 +1893,29 @@ class Iterators
     IL_0017:  ret
 }");
         }
+
+        [Fact]
+        public void TestNullCheckedIteratorInLocalFunction()
+        {
+            var source = @"
+using System.Collections.Generic;
+class Iterators
+{
+    void Use()
+    {
+        IEnumerable<char> e = GetChars(""hello"");
+        IEnumerable<char> GetChars(string s!)
+        {
+            foreach (var c in s)
+            {
+                yield return c;
+            }
+        }
+    }
+
+}";
+            var compilation = CompileAndVerify(source);
+            compilation.VerifyIL("Iterators.<Use>g__GetChars|0_0(string)", @"");
+        }
     }
 }
