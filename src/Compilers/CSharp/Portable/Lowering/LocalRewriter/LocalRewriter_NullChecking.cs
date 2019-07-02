@@ -71,7 +71,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                 paramIsNullCondition = factory.MakeNullCheck(loweredLeft.Syntax, loweredLeft, BinaryOperatorKind.Equal);
             }
             // PROTOTYPE : Make ArgumentNullException
-            BoundThrowStatement throwArgNullStatement = factory.Throw(factory.New(factory.WellKnownType(WellKnownType.System_Exception)));
+            BoundThrowStatement throwArgNullStatement = factory.Throw(factory.New(factory.WellKnownType(WellKnownType.System_ArgumentNullException)));
 
             return factory.HiddenSequencePoint(factory.If(paramIsNullCondition, throwArgNullStatement));
         }
