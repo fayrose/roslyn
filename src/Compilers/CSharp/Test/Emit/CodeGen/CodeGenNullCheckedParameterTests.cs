@@ -733,6 +733,28 @@ class C
         }
 
         [Fact]
+        public void NotNullCheckedLambdaParameter()
+        {
+            var source = @"
+using System;
+class C
+{
+    public void M()
+    {
+        Func<string, string> func1 = x => x;
+    }
+}";
+            var compilation = CompileAndVerify(source);
+            compilation.VerifyIL("C.<>c.<M>b__0_0(string)", @"
+{
+      // Code size        2 (0x2)
+      .maxstack  1
+      IL_0000:  ldarg.1
+      IL_0001:  ret
+}");
+        }
+
+        [Fact]
         public void NullCheckedLambdaParameter()
         {
             var source = @"
