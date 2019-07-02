@@ -1855,7 +1855,21 @@ class Iterators
 
 }";
             var compilation = CompileAndVerify(source);
-            compilation.VerifyIL("Iterators.<Use>g__GetChars|0_0(string)", @"");
+            compilation.VerifyIL("Iterators.<Use>g__GetChars|0_0(string)", @"
+{
+    // Code size       24 (0x18)
+    .maxstack  3
+    IL_0000:  ldarg.0
+    IL_0001:  brtrue.s   IL_0009
+    IL_0003:  newobj     ""System.Exception..ctor()""
+    IL_0008:  throw
+    IL_0009:  ldc.i4.s   -2
+    IL_000b:  newobj     ""Iterators.<<Use>g__GetChars|0_0>d..ctor(int)""
+    IL_0010:  dup
+    IL_0011:  ldarg.0
+    IL_0012:  stfld      ""string Iterators.<<Use>g__GetChars|0_0>d.<>3__s""
+    IL_0017:  ret
+}");
         }
     }
 }
