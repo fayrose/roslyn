@@ -29,8 +29,11 @@ namespace Microsoft.CodeAnalysis.CSharp
                     if (param.Type.IsValueType && !param.Type.IsNullableTypeOrTypeParameter())
                     {
                         factory.Diagnostics.Add(ErrorCode.ERR_NonNullableValueTypeIsNullChecked, param.Locations.FirstOrNone(), new object[] { param });
-                        // PROTOTYPE : Warning or Error, see CodeGenNullCheckedParameterTests.TestNullCheckedSubstitution2
                         continue;
+                    }
+                    if (param.ExplicitDefaultConstantValue?.IsNull ?? false)
+                    {
+                        factory.Diagnostics.Add(ErrorCode.WRN_NullCheckedHasDefaultNull, param.Locations.FirstOrNone(), new object[] { param });
                     }
                     statementList ??= ArrayBuilder<BoundStatement>.GetInstance();
                     var constructedIf = ConstructIfStatementForParameter(param, factory);
