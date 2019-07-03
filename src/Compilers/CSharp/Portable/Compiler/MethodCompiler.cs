@@ -1220,6 +1220,13 @@ namespace Microsoft.CodeAnalysis.CSharp
                                         return;
                                     }
                                 }
+                                hasErrors = boundStatementsWithNullCheck.HasErrors() || diagsForCurrentMethod.HasAnyErrors();
+                                SetGlobalErrorIfTrue(hasErrors);
+                                if (hasErrors)
+                                {
+                                    _diagnostics.AddRange(diagsForCurrentMethod);
+                                    return;
+                                }
                             }
                         }
 
