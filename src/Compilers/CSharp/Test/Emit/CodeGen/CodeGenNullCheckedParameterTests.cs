@@ -1541,5 +1541,27 @@ class C
     IL_000e:  ret
 }");
         }
+
+        [Fact]
+        public void TestNullCheckedParams()
+        {
+            var source = @"
+class C
+{
+    public static void Main() { }
+    public void M(params int[] number!) {}
+}";
+            CompileAndVerify(source).VerifyIL("C.M(params int[])", @"
+{
+    // Code size       15 (0xf)
+    .maxstack  1
+    IL_0000:  ldarg.1
+    IL_0001:  brtrue.s   IL_000e
+    IL_0003:  ldstr      ""number""
+    IL_0008:  newobj     ""System.ArgumentNullException..ctor(string)""
+    IL_000d:  throw
+    IL_000e:  ret
+}");
+        }
     }
 }
