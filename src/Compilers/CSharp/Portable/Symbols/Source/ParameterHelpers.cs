@@ -224,7 +224,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                         }
                         else if (parameter.ExclamationToken.Kind() != SyntaxKind.None)
                         {
-                            diagnostics.Add(ErrorCode.ERR_NullCheckingOnByRefParameter, parameter.ExclamationToken.GetLocation(), parameter);
+                            diagnostics.Add(ErrorCode.ERR_NullCheckingOnByRefParameter, parameter.ExclamationToken.GetLocation(), parameter.Identifier.ValueText);
                         }
                         else
                         {
@@ -255,7 +255,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                         }
                         else if (parameter.ExclamationToken.Kind() != SyntaxKind.None)
                         {
-                            diagnostics.Add(ErrorCode.ERR_NullCheckingOnByRefParameter, parameter.ExclamationToken.GetLocation(), parameter);
+                            diagnostics.Add(ErrorCode.ERR_NullCheckingOnByRefParameter, parameter.ExclamationToken.GetLocation(), parameter.Identifier.ValueText);
                         }
                         else
                         {
@@ -309,7 +309,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                         }
                         else if (parameter.ExclamationToken.Kind() != SyntaxKind.None)
                         {
-                            diagnostics.Add(ErrorCode.ERR_NullCheckingOnByRefParameter, parameter.ExclamationToken.GetLocation(), parameter);
+                            diagnostics.Add(ErrorCode.ERR_NullCheckingOnByRefParameter, parameter.ExclamationToken.GetLocation(), parameter.Identifier.ValueText);
                         }
                         else
                         {
