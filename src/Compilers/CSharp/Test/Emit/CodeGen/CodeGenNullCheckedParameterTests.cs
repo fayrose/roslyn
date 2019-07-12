@@ -1480,7 +1480,7 @@ class Program
             var comp = CreateCompilation(source);
             comp.MakeMemberMissing(WellKnownMember.System_ArgumentNullException__ctorString);
             comp.MakeTypeMissing(WellKnownType.System_ArgumentNullException);
-            comp.VerifyEmitDiagnostics(
+            comp.VerifyDiagnostics(
                     // (7,37): error CS0656: Missing compiler required member 'System.ArgumentNullException..ctor'
                     //         Func<string, string> func = x! => x;
                     Diagnostic(ErrorCode.ERR_MissingPredefinedMember, "x").WithArguments("System.ArgumentNullException", ".ctor").WithLocation(7, 37));
@@ -1503,7 +1503,7 @@ class Program
             var comp = CreateCompilation(source);
             comp.MakeMemberMissing(WellKnownMember.System_ArgumentNullException__ctorString);
             comp.MakeTypeMissing(WellKnownType.System_ArgumentNullException);
-            comp.VerifyEmitDiagnostics(
+            comp.VerifyDiagnostics(
                     // (8,23): error CS0656: Missing compiler required member 'System.ArgumentNullException..ctor'
                     //         void M(string x!) { }
                     Diagnostic(ErrorCode.ERR_MissingPredefinedMember, "x").WithArguments("System.ArgumentNullException", ".ctor").WithLocation(8, 23));
