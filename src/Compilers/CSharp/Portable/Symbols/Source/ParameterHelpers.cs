@@ -222,10 +222,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                         {
                             diagnostics.Add(ErrorCode.ERR_BadParameterModifiers, modifier.GetLocation(), SyntaxFacts.GetText(SyntaxKind.RefKeyword), SyntaxFacts.GetText(SyntaxKind.InKeyword));
                         }
-                        else if (parameter.ExclamationToken.Kind() != SyntaxKind.None)
-                        {
-                            diagnostics.Add(ErrorCode.ERR_NullCheckingOnByRefParameter, parameter.ExclamationToken.GetLocation(), parameter.Identifier.ValueText);
-                        }
                         else
                         {
                             seenRef = true;
@@ -252,10 +248,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                         else if (seenIn)
                         {
                             diagnostics.Add(ErrorCode.ERR_BadParameterModifiers, modifier.GetLocation(), SyntaxFacts.GetText(SyntaxKind.OutKeyword), SyntaxFacts.GetText(SyntaxKind.InKeyword));
-                        }
-                        else if (parameter.ExclamationToken.Kind() != SyntaxKind.None)
-                        {
-                            diagnostics.Add(ErrorCode.ERR_NullCheckingOnByRefParameter, parameter.ExclamationToken.GetLocation(), parameter.Identifier.ValueText);
                         }
                         else
                         {
@@ -306,10 +298,6 @@ namespace Microsoft.CodeAnalysis.CSharp.Symbols
                         else if (seenParams)
                         {
                             diagnostics.Add(ErrorCode.ERR_ParamsCantBeWithModifier, modifier.GetLocation(), SyntaxFacts.GetText(SyntaxKind.InKeyword));
-                        }
-                        else if (parameter.ExclamationToken.Kind() != SyntaxKind.None)
-                        {
-                            diagnostics.Add(ErrorCode.ERR_NullCheckingOnByRefParameter, parameter.ExclamationToken.GetLocation(), parameter.Identifier.ValueText);
                         }
                         else
                         {
