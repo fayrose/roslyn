@@ -50,7 +50,7 @@ namespace Microsoft.CodeAnalysis.CSharp
 
         }
 
-        private static bool GetParameterIsNullChecked(ParameterSymbol x)
+        internal static bool GetParameterIsNullChecked(ParameterSymbol x)
         {
             if (x is SourceParameterSymbolBase param && param.IsNullChecked)
                 return true;
