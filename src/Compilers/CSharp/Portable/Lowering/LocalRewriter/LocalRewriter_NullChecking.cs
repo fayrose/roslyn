@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the Apache License, Version 2.0.  See License.txt in the project root for license information.
 using System.Collections.Immutable;
 using System.Diagnostics;
+using Microsoft.Cci;
+using Microsoft.CodeAnalysis.CodeGen;
 using Microsoft.CodeAnalysis.CSharp.Symbols;
 using Microsoft.CodeAnalysis.PooledObjects;
 
@@ -47,7 +49,7 @@ namespace Microsoft.CodeAnalysis.CSharp
         {
             BoundExpression paramIsNullCondition;
             var loweredLeft = factory.Parameter(parameter);
-
+            var details = factory.ModuleBuilderOpt.GetPrivateImplClass(parameter.GetNonNullSyntaxNode(), factory.Diagnostics);
             if (loweredLeft.Type.IsNullableType())
             {
                 paramIsNullCondition = factory.Not(factory.MakeNullableHasValue(loweredLeft.Syntax, loweredLeft));
@@ -56,11 +58,14 @@ namespace Microsoft.CodeAnalysis.CSharp
             {
                 paramIsNullCondition = factory.MakeNullCheck(loweredLeft.Syntax, loweredLeft, BinaryOperatorKind.Equal);
             }
-
+            var overridenThrow = details.GetMethod(WellKnownMemberNames.ThrowIfNullMethodName);
+            if (overridenThrow is null)
+            {
+                overridenThrow = new ThrowIfNullMethod(factory.ModuleBuilderOpt.SourceModule, details, factory.SpecialType(SpecialType.System_Void), factory.SpecialType(SpecialType.System_String));
+                details.TryAddSynthesizedMethod(overridenThrow);
+            }
             var argumentName = ImmutableArray.Create<BoundExpression>(factory.StringLiteral(parameter.Name));
-            BoundObjectCreationExpression ex = factory.New(factory.WellKnownMethod(WellKnownMember.System_ArgumentNullException__ctorString), argumentName);
-            BoundThrowStatement throwArgNullStatement = factory.Throw(ex);
-
+            BoundStatement throwArgNullStatement = factory.Return(factory.StaticCall((MethodSymbol)overridenThrow, argumentName));
             return factory.HiddenSequencePoint(factory.If(paramIsNullCondition, throwArgNullStatement));
         }
     }
