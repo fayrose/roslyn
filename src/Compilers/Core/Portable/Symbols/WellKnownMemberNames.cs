@@ -338,5 +338,9 @@ namespace Microsoft.CodeAnalysis
         /// The required name for the <c>Slice</c> method used in a pattern-based Range indexer.
         /// </summary>
         public const string SliceMethodName = "Slice";
+        /// <summary>
+        /// The name for the <c>ThrowIfNull</c> method used to throw an exception on null-checked parameters.
+        /// </summary>
+        public const string ThrowIfNullMethodName = "ThrowIfNull";
     }
 }

@@ -3463,6 +3463,14 @@ namespace Microsoft.CodeAnalysis
                     1,                                                                                                      // Method Signature
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_Void,                                      // Return Type
                     (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_String,                                    // Argument
+
+                // System_Runtime_CompilerServices_ThrowIfNull__String
+                (byte)(MemberFlags.Method | MemberFlags.Static | MemberFlags.Virtual),                                      // Flags
+                (byte)WellKnownType.System_Runtime_CompilerServices_RuntimeHelpers,                                         // DeclaringTypeId
+                0,                                                                                                          // Arity
+                    1,                                                                                                      // Method Signature
+                    (byte)SignatureTypeCode.TypeHandle, (byte)WellKnownType.System_Exception,                               // Return Type
+                    (byte)SignatureTypeCode.TypeHandle, (byte)SpecialType.System_String,                                    // Argument
             };
 
             string[] allNames = new string[(int)WellKnownMember.Count]
@@ -3898,6 +3906,7 @@ namespace Microsoft.CodeAnalysis
                 "Token",                                    // System_Threading_CancellationTokenSource__Token
                 "Dispose",                                  // System_Threading_CancellationTokenSource__Dispose
                 ".ctor",                                    // System_ArgumentNullException__ctorString
+                "ThrowIfNull",                              // System_Runtime_CompilerServices_ThrowIfNull__String
             };
 
             s_descriptors = MemberDescriptor.InitializeFromStream(new System.IO.MemoryStream(initializationBytes, writable: false), allNames);
