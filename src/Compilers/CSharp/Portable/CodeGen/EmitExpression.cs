@@ -1456,7 +1456,11 @@ namespace Microsoft.CodeAnalysis.CSharp.CodeGen
             var method = call.Method;
             var receiver = call.ReceiverOpt;
             LocalDefinition tempOpt = null;
-
+            if (call.ExpressionSymbol is SynthesizedGlobalMethodSymbol)
+            {
+                // Write Helper that calls Op codes on builder
+                
+            }
             // Calls to the default struct constructor are emitted as initobj, rather than call.
             // NOTE: constructor invocations are represented as BoundObjectCreationExpressions,
             // rather than BoundCalls.  This is why we can be confident that if we see a call to a
